@@ -4,6 +4,7 @@ with open("day1input.txt","r") as f:
 
 total = 0
 value = 50
+prev_value = 50
 for line in input.split('\n'):
     direction = line[0]
     line = line.removeprefix("L")
@@ -17,11 +18,20 @@ for line in input.split('\n'):
         print("wot?")
 
     while value < 0:
+        total+=1
         value += 100
-    while value > 99:
+    while value > 100:
+        total+=1
         value -= 100
 
-    if value == 0:
+    # did we actually land on 0
+    if value == 100 or value == 0:
         total+=1
+        value = 0
+
+    if prev_value == 0 and direction == "L":
+        total-=1
+
+    prev_value = value
 
 print(total)
